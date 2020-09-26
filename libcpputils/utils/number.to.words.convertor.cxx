@@ -20,7 +20,7 @@ namespace Convert
 {
     // Bring these objects into the Convert namespacse scope
     using std::vector, std::unordered_map, std::cout, std::string, std::to_string,
-      std::stoi;
+        std::stoul;
     class NumberToWordConvertor
     {
        private:
@@ -72,7 +72,6 @@ namespace Convert
             , m_number_copy {number}
             , m_stringified_number {to_string(m_number)}
             , m_number_of_digits {m_stringified_number.length()}
-            , m_dictionary()
         {
         }
 
@@ -109,8 +108,7 @@ namespace Convert
                             }
                             else if (zero_counter == 1)
                             {
-                                auto tense_value =
-                                    static_cast<uint64_t>(stoi(m_place_value));
+                                auto tense_value = stoul(m_place_value);
                                 auto once_value = m_number - tense_value;
                                 insertWords(tense_value);
                                 if (once_value > 0)
@@ -133,9 +131,9 @@ namespace Convert
         // function
         auto updateNumber(const uint64_t unit, const uint64_t value)
         {
-            m_stringified_number = to_string(
-                static_cast<uint64_t>(stoi(m_stringified_number)) - (unit * value));
-            m_number = static_cast<uint64_t>(stoi(m_stringified_number));
+            m_stringified_number =
+                to_string(stoul(m_stringified_number) - (unit * value));
+            m_number = stoul(m_stringified_number);
             m_number_of_digits = m_stringified_number.length();
         }
 
@@ -145,7 +143,7 @@ namespace Convert
                                                   const uint64_t value)
         {
             m_stringified_number = to_string(m_unit - (unit * value));
-            m_number = static_cast<uint64_t>(stoi(m_stringified_number));
+            m_number = stoul(m_stringified_number);
             m_number_of_digits = m_stringified_number.length();
         }
 
