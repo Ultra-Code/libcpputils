@@ -1,0 +1,6 @@
+$out_root/
+{
+  include libcpputils/
+}
+
+export $out_root/libcpputils/$import.target

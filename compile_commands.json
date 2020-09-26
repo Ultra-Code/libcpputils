@@ -1,0 +1,50 @@
+[
+ {
+  "directory": "/home/ultracode/repos/c++/build2/libcpputils",
+  "arguments": [
+   "clang++-11",
+   "-I/home/ultracode/repos/c++/build2/libcpputils-clang/libcpputils",
+   "-I/home/ultracode/repos/c++/build2/libcpputils",
+   "-DLIBCPPUTILS_STATIC_BUILD",
+   "-Weverything",
+   "-Wno-c++98-compat",
+   "-Wno-c++98-compat-pedantic",
+   "-Wmissing-prototypes",
+   "-std=c++2a",
+   "-fsanitize=address",
+   "-fsanitize=undefined",
+   "-fsanitize=leak",
+   "-o",
+   "../libcpputils-clang/libcpputils/libcpputils/cpputils.a.o",
+   "-c",
+   "-x",
+   "c++",
+   "/home/ultracode/repos/c++/build2/libcpputils/libcpputils/cpputils.cxx"
+  ],
+  "file": "/home/ultracode/repos/c++/build2/libcpputils/libcpputils/cpputils.cxx"
+ },
+ {
+  "directory": "/home/ultracode/repos/c++/build2/libcpputils",
+  "arguments": [
+   "clang++-11",
+   "-I/home/ultracode/repos/c++/build2/libcpputils-clang/libcpputils",
+   "-I/home/ultracode/repos/c++/build2/libcpputils",
+   "-DLIBCPPUTILS_SHARED",
+   "-Weverything",
+   "-Wno-c++98-compat",
+   "-Wno-c++98-compat-pedantic",
+   "-Wmissing-prototypes",
+   "-std=c++2a",
+   "-fsanitize=address",
+   "-fsanitize=undefined",
+   "-fsanitize=leak",
+   "-o",
+   "../libcpputils-clang/libcpputils/tests/basics/driver.o",
+   "-c",
+   "-x",
+   "c++",
+   "/home/ultracode/repos/c++/build2/libcpputils/tests/basics/driver.cxx"
+  ],
+  "file": "/home/ultracode/repos/c++/build2/libcpputils/tests/basics/driver.cxx"
+ }
+]
