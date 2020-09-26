@@ -24,17 +24,17 @@ namespace Convert
     class NumberToWordConvertor
     {
        private:
-        uint32_t m_number {};
-        const uint32_t m_number_copy {};
-        const uint32_t m_21 {21};
+        uint64_t m_number {};
+        const uint64_t m_number_copy {};
+        const uint64_t m_21 {21};
         vector<string> m_words{};
         string m_place_value{};
         const string m_zero{ "0" };
         string m_stringified_number{};
         size_t m_number_of_digits{};
-        uint32_t m_unit {};
-        uint32_t m_unit_lenght {};
-        const unordered_map<uint32_t, string> m_dictionary {{1, "One"},
+        uint64_t m_unit {};
+        uint64_t m_unit_lenght {};
+        const unordered_map<uint64_t, string> m_dictionary {{1, "One"},
                                                             {2, "Two"},
                                                             {3, "Three"},
                                                             {4, "Four"},
@@ -65,8 +65,9 @@ namespace Convert
                                                             {1000, "Thousand"},
                                                             {1000'000, "Million"},
                                                             {1'000'000'000, "Billion"}};
+
        public:
-        explicit NumberToWordConvertor(unsigned number)
+        explicit NumberToWordConvertor(uint64_t number)
             : m_number {number}
             , m_number_copy {number}
             , m_stringified_number {to_string(m_number)}
@@ -76,7 +77,7 @@ namespace Convert
         }
 
         // Insert Found Words in the Dictionary into the word vector
-        auto insertWords(const uint32_t number_to_words)
+        auto insertWords(const uint64_t number_to_words)
         {
             if (m_dictionary.find(number_to_words) != m_dictionary.cend())
             {
@@ -109,7 +110,7 @@ namespace Convert
                             else if (zero_counter == 1)
                             {
                                 auto tense_value =
-                                    static_cast<uint32_t>(stoi(m_place_value));
+                                    static_cast<uint64_t>(stoi(m_place_value));
                                 auto once_value = m_number - tense_value;
                                 insertWords(tense_value);
                                 if (once_value > 0)
@@ -130,21 +131,21 @@ namespace Convert
 
         // Update the state of the variables after relivant changes in
         // function
-        auto updateNumber(const unsigned unit, const unsigned value)
+        auto updateNumber(const uint64_t unit, const uint64_t value)
         {
             m_stringified_number = to_string(
-                static_cast<unsigned>(stoi(m_stringified_number)) - (unit * value));
-            m_number = static_cast<uint32_t>(stoi(m_stringified_number));
+                static_cast<uint64_t>(stoi(m_stringified_number)) - (unit * value));
+            m_number = static_cast<uint64_t>(stoi(m_stringified_number));
             m_number_of_digits = m_stringified_number.length();
         }
 
         // A special update function for OnceAndTense When Forming the
         // Hundreds Of Thousands
-        auto updateForOnceAndTenseWhenInThousands(const unsigned unit,
-                                                  const unsigned value)
+        auto updateForOnceAndTenseWhenInThousands(const uint64_t unit,
+                                                  const uint64_t value)
         {
             m_stringified_number = to_string(m_unit - (unit * value));
-            m_number = static_cast<uint32_t>(stoi(m_stringified_number));
+            m_number = static_cast<uint64_t>(stoi(m_stringified_number));
             m_number_of_digits = m_stringified_number.length();
         }
 
@@ -155,7 +156,7 @@ namespace Convert
             // insertor for the Hundreds in the thousands 100,000
             if (m_number_of_digits != 3 && m_unit_lenght == 3)
             {
-                auto unit = static_cast<unsigned>(m_unit / hundred_place);
+                auto unit = m_unit / hundred_place;
                 insertWords(unit);
                 insertWords(hundred_place);
                 updateForOnceAndTenseWhenInThousands(unit, hundred_place);
@@ -165,7 +166,7 @@ namespace Convert
             // Regular Hundred Insertor
             if (m_number_of_digits == 3)
             {
-                m_unit = static_cast<unsigned>(m_number / hundred_place);
+                m_unit = m_number / hundred_place;
                 insertWords(m_unit);
                 insertWords(hundred_place);
                 m_words.emplace_back("And");
@@ -178,8 +179,8 @@ namespace Convert
         auto thousands()
         {
             const auto thousand_place{ 1'000 };
-            m_unit = static_cast<unsigned>(m_number / thousand_place);
-            m_unit_lenght = static_cast<uint32_t>(to_string(m_unit).length());
+            m_unit = m_number / thousand_place;
+            m_unit_lenght = to_string(m_unit).length();
             auto local_stringified{ m_stringified_number };
             auto local_unit{ m_unit };
             if (m_unit_lenght == 3)
@@ -209,7 +210,7 @@ namespace Convert
         auto million()
         {
             const auto million_place{ 1'000'000 };
-            m_unit = static_cast<unsigned>(m_number / million_place);
+            m_unit = m_number / million_place;
             insertWords(m_unit);
             insertWords(million_place);
             updateNumber(m_unit, million_place);
