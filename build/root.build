@@ -4,7 +4,7 @@ using cxx
 
 hxx{*}: extension = hxx
 ixx{*}: extension = ixx
-txx{*}: extension = txx
+txx{*}: extension = tpp
 cxx{*}: extension = cxx
 
 # The test target for cross-testing (running tests under Wine, etc).

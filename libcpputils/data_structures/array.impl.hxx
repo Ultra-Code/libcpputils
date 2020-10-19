@@ -1,4 +1,4 @@
-#include "array.hpp"
+#include "array.hxx"
 #include <algorithm>
 #include <iostream>
 #include <stdexcept> // std::out_of_range() exception
