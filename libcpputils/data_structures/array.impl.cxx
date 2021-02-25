@@ -1,8 +1,13 @@
-#include "array.hxx"
-#include <algorithm>
+module;
 #include <iostream>
+#include <algorithm>
 #include <stdexcept> // std::out_of_range() exception
 #include <utility>   // for std::as_const() for making const and exchange()
+module data_structures.array;
+// import<algorithm>;
+// import<iostream>;
+// import<stdexcept>;
+// import<utility>;
 
 namespace mal
 {
@@ -143,7 +148,7 @@ namespace mal
     }
 
     template <typename T>
-    Array<T>::~Array<T>()
+    Array<T>::~Array()
     {
         delete[] m_elements;
     }

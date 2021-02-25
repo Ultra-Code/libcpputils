@@ -1,5 +1,7 @@
-#pragma once
-#include <cstddef> // for size_t defination
+export module data_structures.array;
+//#pragma once
+//#include <cstddef> // for size_t defination
+import<cstddef>;
 
 namespace mal
 {
