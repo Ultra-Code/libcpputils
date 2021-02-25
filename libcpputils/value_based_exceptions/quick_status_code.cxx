@@ -9,8 +9,8 @@ a()
             domain::status_codes_>>(domain::status_codes_::error2);
 }
 
-int
-main()
+auto
+quick_status_main() -> int
 {
     try
     {
@@ -28,8 +28,8 @@ main()
     // function.
     BOOST_OUTCOME_SYSTEM_ERROR2_CONSTEXPR14 auto v =
         status_code(domain::status_codes_::error2);
-    assert(v.value() == domain::status_codes_::error2);
-    assert(v.custom_method() == 42);
+    static_assert(v.value() == domain::status_codes_::error2);
+    static_assert(v.custom_method() == 42);
 
     // If you don't need custom methods, just use system_code, all erased
     // status codes recognise quick_status_code_from_enum
