@@ -2,11 +2,11 @@
 //#include <sstream>
 //#include <stdexcept>
 #include <libcpputils/version.hxx>
+import cpputils;
 import<sstream>;
 import<stdexcept>;
 import<cassert>;
 
-import cpputils;
 
 auto
 main() -> int
