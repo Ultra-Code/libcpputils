@@ -1,8 +1,13 @@
 intf_libs = # Interface dependencies.
 impl_libs = # Implementation dependencies.
+
 import impl_libs += fmt%lib{fmt}
 
-lib{cpputils}: {hxx ixx txx cxx}{** -version} hxx{version} $impl_libs $intf_libs
+lib{cpputils}: {hxx mxx txx cxx}{** -version} hxx{version} $impl_libs $intf_libs
+
+hxx{export}@./: cxx.importable = false
+
+mxx{cpputils}@./: cxx.module_name = cpputils
 
 # Include the generated version header into the distribution (so that we don't
 # pick up an installed one) and don't remove it when cleaning in src (so that
@@ -18,8 +23,8 @@ hxx{version}: in{version} $src_root/manifest
 #
 cxx.poptions =+ "-I$out_root" "-I$src_root"
 
-obja{*}: cxx.poptions += -DLIBCPPUTILS_STATIC_BUILD
-objs{*}: cxx.poptions += -DLIBCPPUTILS_SHARED_BUILD
+{hbmia obja}{*}: cxx.poptions += -DLIBCPPUTILS_STATIC_BUILD
+{hbmis objs}{*}: cxx.poptions += -DLIBCPPUTILS_SHARED_BUILD
 
 # Export options.
 #
@@ -44,7 +49,7 @@ else
 # Install into the libcpputils/ subdirectory of, say, /usr/include/
 # recreating subdirectories.
 #
-{hxx ixx txx}{*}:
+{hxx mxx txx}{*}:
 {
   install         = include/libcpputils/
   install.subdirs = true
