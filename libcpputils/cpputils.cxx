@@ -1,7 +1,9 @@
-#include <libcpputils/cpputils.hxx>
-
-#include <ostream>
-#include <stdexcept>
+//#include <ostream>
+//#include <stdexcept>
+//#include <libcpputils/cpputils.hxx>
+module cpputils;
+import<ostream>;
+import<stdexcept>;
 
 using namespace std;
 
@@ -14,4 +16,4 @@ namespace cpputils
 
     o << "Hello, " << n << '!' << endl;
   }
-}
+} // namespace cpputils
