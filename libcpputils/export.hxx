@@ -9,21 +9,25 @@
 // the end it's all trial and error.
 
 #if defined(LIBCPPUTILS_STATIC)         // Using static.
-#  define LIBCPPUTILS_SYMEXPORT
+    #define LIBCPPUTILS_SYMEXPORT
 #elif defined(LIBCPPUTILS_STATIC_BUILD) // Building static.
-#  define LIBCPPUTILS_SYMEXPORT
+    #define LIBCPPUTILS_SYMEXPORT
 #elif defined(LIBCPPUTILS_SHARED)       // Using shared.
-#  ifdef _WIN32
-#    define LIBCPPUTILS_SYMEXPORT __declspec(dllimport)
-#  else
-#    define LIBCPPUTILS_SYMEXPORT
-#  endif
+    #ifdef _WIN32
+        #define LIBCPPUTILS_SYMEXPORT __declspec(dllimport)
+    #elif __linux__
+        #define LIBCPPUTILS_SYMEXPORT __attribute__((visibility("default")))
+    #else
+        #define LIBCPPUTILS_SYMEXPORT
+    #endif
 #elif defined(LIBCPPUTILS_SHARED_BUILD) // Building shared.
-#  ifdef _WIN32
-#    define LIBCPPUTILS_SYMEXPORT __declspec(dllexport)
-#  else
-#    define LIBCPPUTILS_SYMEXPORT
-#  endif
+    #ifdef _WIN32
+        #define LIBCPPUTILS_SYMEXPORT __declspec(dllexport)
+    #elif __linux__
+        #define LIBCPPUTILS_SYMEXPORT __attribute__((visibility("default")))
+    #else
+        #define LIBCPPUTILS_SYMEXPORT
+    #endif
 #else
 // If none of the above macros are defined, then we assume we are being used
 // by some third-party build system that cannot/doesn't signal the library
@@ -34,6 +38,6 @@
 // then you will probably want to replace the fallback with the (commented
 // out) error since it won't work for the shared case.
 //
-#  define LIBCPPUTILS_SYMEXPORT         // Using static or shared.
+    #define LIBCPPUTILS_SYMEXPORT // Using static or shared.
 //#  error define LIBCPPUTILS_STATIC or LIBCPPUTILS_SHARED preprocessor macro to signal libcpputils library type being linked
 #endif
