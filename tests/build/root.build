@@ -1,9 +1,13 @@
-cxx.std = latest
+cxx.std = experimental
+
+cxx.features.modules = true
+
+assert $cxx.features.modules "no modules support for $cxx.signature"
 
 using cxx
 
 hxx{*}: extension = hxx
-ixx{*}: extension = ixx
+mxx{*}: extension = mxx
 txx{*}: extension = txx
 cxx{*}: extension = cxx
 
