@@ -1,7 +1,6 @@
 cxx.std = experimental
 
 cxx.features.modules = true
-cxx.features.symexport = true
 
 /*cxx.translate_include=std-importable <algorithms>@false*/
 /*cxx.translate_include=all-importable*/
