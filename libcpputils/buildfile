@@ -1,7 +1,6 @@
 intf_libs = # Interface dependencies.
 impl_libs = # Implementation dependencies.
-
-import impl_libs += fmt%lib{fmt}
+import intf_libs += fmt%lib{fmt}
 
 lib{cpputils}: {hxx mxx txx cxx}{** -version} hxx{version} $impl_libs $intf_libs
 
