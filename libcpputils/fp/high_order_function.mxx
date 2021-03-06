@@ -1,106 +1,92 @@
-// module;
+module;
 //#include <functional>
-//#include <string>
+#include <string>
 //#include <tuple>
 export module high_order_function;
-//#include <functional>
-import<functional>;
-import<string>;
-import<tuple>;
+ import<functional>;
+ //import<string>;
+ import<tuple>;
 
-export
-{
-    inline auto constexpr sfOffice =
-        [](std::tuple<std::string, std::string> names) {
-            auto LastName = std::get<1>(names);
-            auto nameText = std::get<0>(names) + " " + LastName;
-            if (LastName > "L")
-            {
-                return nameText + " - PO Box 1234 - San Francisco, CA, 94111";
-            }
-            return nameText + " - PO Box 1010 - San Francisco, CA, 94109";
-        };
-
-    inline auto constexpr nyOffice =
-        [](std::tuple<std::string, std::string> names) {
-            auto nameText = std::get<0>(names) + " " + std::get<1>(names);
-
-            return nameText + ": PO Box 789 - New York, NY, 10013";
-        };
-
-    inline auto constexpr renoOffice =
-        [](std::tuple<std::string, std::string> names) {
-            auto nameText = std::get<1>(names);
-
-            return nameText + " - PO Box 456 - Reno, NV 89523";
-        };
-
-    enum class locations
-    {
-        ny,
-        sf,
-        reno
+inline auto constexpr sfOffice =
+    [](std::tuple<std::string, std::string> names) {
+      auto LastName = std::get<1>(names);
+      auto nameText = std::get<0>(names) + " " + LastName;
+      if (LastName > "L") {
+        return nameText + " - PO Box 1234 - San Francisco, CA, 94111";
+      }
+      return nameText + " - PO Box 1010 - San Francisco, CA, 94109";
     };
 
-    inline auto constexpr getLocation = [](locations location)
-        -> std::function<std::string(std::tuple<std::string, std::string>)> {
-        switch (location)
-        {
-            case locations::ny:
-            {
-                return nyOffice;
-            }
-            case locations::sf:
-            {
-                return sfOffice;
-            }
-            case locations::reno:
-            {
-                return renoOffice;
-            }
-        }
+inline auto constexpr nyOffice =
+    [](std::tuple<std::string, std::string> names) {
+      auto nameText = std::get<0>(names) + " " + std::get<1>(names);
+
+      return nameText + ": PO Box 789 - New York, NY, 10013";
     };
 
-    inline auto constexpr addressLetter =
-        [](locations location, std::tuple<std::string, std::string> names) {
-            auto nameText = std::get<0>(names) + " " + std::get<1>(names);
-            auto LocationFunction = getLocation(location);
-            return LocationFunction(names);
-        };
+inline auto constexpr renoOffice =
+    [](std::tuple<std::string, std::string> names) {
+      auto nameText = std::get<1>(names);
 
-    auto func(int x, int y, int z) { return x + y + z; }
-
-    auto func_lam = [](int x) {
-        return [x](int y) {
-            return [x, y](int z) {
-                return [x, y, z](int a, int b) { return a + b + x + y + z; };
-            };
-        };
+      return nameText + " - PO Box 456 - Reno, NV 89523";
     };
 
-    auto ackermann(uint32_t m, uint32_t n)->decltype(auto)
-    {
-        if (m == 0)
-        {
-            return n + 1;
-        }
-        if (n == 0)
-        {
-            return ackermann(m - 1, 1);
-        }
-        return ackermann((m - 1), (ackermann(m, n - 1)));
-    }
+enum class locations { ny, sf, reno };
 
-    constexpr auto recursive_lambdas = [](int n) {
-        constexpr auto fib = [](int n, auto &&fib) {
-            if (n <= 1)
-            {
-                return n;
-            }
-            return fib(n - 1, fib) + fib(n - 2, fib);
-        };
-        return [fib, n]() { return fib(n, fib); }();
+inline auto constexpr getLocation = [](locations location)
+    -> std::function<std::string(std::tuple<std::string, std::string>)> {
+  switch (location) {
+  case locations::ny: {
+    return nyOffice;
+  }
+  case locations::sf: {
+    return sfOffice;
+  }
+  case locations::reno: {
+    return renoOffice;
+  }
+  }
+};
+
+inline auto constexpr addressLetter =
+    [](locations location, std::tuple<std::string, std::string> names) {
+      auto nameText         = std::get<0>(names) + " " + std::get<1>(names);
+      auto LocationFunction = getLocation(location);
+      return LocationFunction(names);
     };
 
-    auto i = recursive_lambdas(1);
+auto
+func(int x, int y, int z) {
+  return x + y + z;
 }
+
+auto func_lam = [](int x) {
+  return [x](int y) {
+    return [x, y](int z) {
+      return [x, y, z](int a, int b) { return a + b + x + y + z; };
+    };
+  };
+};
+
+auto
+ackermann(uint32_t m, uint32_t n) -> decltype(auto) {
+  if (m == 0) {
+    return n + 1;
+  }
+  if (n == 0) {
+    return ackermann(m - 1, 1);
+  }
+  return ackermann((m - 1), (ackermann(m, n - 1)));
+}
+
+constexpr auto recursive_lambdas = [](int n) {
+  constexpr auto fib = [](int n, auto &&fib) {
+    if (n <= 1) {
+      return n;
+    }
+    return fib(n - 1, fib) + fib(n - 2, fib);
+  };
+  return [fib, n]() { return fib(n, fib); }();
+};
+
+auto i = recursive_lambdas(1);

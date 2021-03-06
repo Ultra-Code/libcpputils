@@ -1,43 +1,34 @@
-// module;
-//#include <string>
-//#include <cstdint>
-//#include <vector>
+module;
+#include <concepts>
+#include <string>
+#include <cstdint>
+#include <vector>
 export module invocable;
-import<string>;
-import<cstdint>;
-import<vector>;
-export
-{
-        enum class Gender
-        {
-            Male,
-            Female
-        };
-        struct persons_t
-        {
-            std::string name {};
-            uint32_t age {};
-            Gender gender = Gender::Male;
-        };
+// import<vector>;
+////import<string>;
+// import<concepts>;
+// import<cstdint>;
 
-    template <typename FilterFuntion>
-    concept PersonFilterFuntion = requires
-    {
-        std::is_function_v<FilterFuntion>;
-    };
+export struct persons_t {
+  enum class Gender { Male, Female };
+  std::string name{};
+  uint32_t age{};
+  Gender gender = Gender::Male;
+};
 
-    [[using gnu: const]] auto name_for(std::vector<persons_t> const &persons,
-                                       PersonFilterFuntion auto filter)
-        ->std::vector<std::string>
-    {
-        auto result = std::vector<std::string>();
-        for (auto const &human : persons)
-        {
-            if (filter(human))
-            {
-                result.emplace_back(human.name);
-            }
-        }
-        return result;
+// template<typename FilterFuntion>
+// concept PersonFilterFuntion = requires {
+//   std::is_function_v<FilterFuntion>;
+// };
+
+export auto
+name_for(std::vector<persons_t> const &persons,
+         std::predicate<persons_t> auto &&filter) -> std::vector<std::string> {
+  auto result = std::vector<std::string>();
+  for (auto const &human : persons) {
+    if (filter(human)) {
+      result.emplace_back(human.name);
     }
+  }
+  return result;
 }

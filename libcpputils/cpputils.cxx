@@ -1,3 +1,4 @@
+module;
 //#include <ostream>
 //#include <stdexcept>
 //#include <libcpputils/cpputils.hxx>
@@ -7,13 +8,12 @@ import<stdexcept>;
 
 using namespace std;
 
-namespace cpputils
-{
-  void say_hello (ostream& o, const string& n)
-  {
-    if (n.empty ())
-      throw invalid_argument ("empty name");
-
+namespace cpputils {
+  void
+  say_hello(ostream &o, const string &n) {
+    if (n.empty()) {
+      throw invalid_argument("empty name");
+    }
     o << "Hello, " << n << '!' << endl;
   }
 } // namespace cpputils
