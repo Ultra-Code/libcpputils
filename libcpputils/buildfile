@@ -2,7 +2,7 @@ intf_libs = # Interface dependencies.
 impl_libs = # Implementation dependencies.
 import intf_libs += fmt%lib{fmt}
 
-lib{cpputils}: {hxx mxx txx cxx}{** -version} hxx{version} $impl_libs $intf_libs
+libs{cpputils}: {hxx mxx txx cxx}{** -version} hxx{version} $impl_libs $intf_libs
 
 hxx{export}@./: cxx.importable = false
 
@@ -22,18 +22,18 @@ hxx{version}: in{version} $src_root/manifest
 #
 cxx.poptions =+ "-I$out_root" "-I$src_root"
 
-{hbmia obja}{*}: cxx.poptions += -DLIBCPPUTILS_STATIC_BUILD
+#{hbmia obja}{*}: cxx.poptions += -DLIBCPPUTILS_STATIC_BUILD
 {hbmis objs}{*}: cxx.poptions += -DLIBCPPUTILS_SHARED_BUILD
 
 # Export options.
 #
-lib{cpputils}:
+libs{cpputils}:
 {
   cxx.export.poptions = "-I$out_root" "-I$src_root"
   cxx.export.libs = $intf_libs
 }
 
-liba{cpputils}: cxx.export.poptions += -DLIBCPPUTILS_STATIC
+#liba{cpputils}: cxx.export.poptions += -DLIBCPPUTILS_STATIC
 libs{cpputils}: cxx.export.poptions += -DLIBCPPUTILS_SHARED
 
 # For pre-releases use the complete version to make sure they cannot be used
@@ -41,9 +41,9 @@ libs{cpputils}: cxx.export.poptions += -DLIBCPPUTILS_SHARED
 # for details on the version.* variable values.
 #
 if $version.pre_release
-  lib{cpputils}: bin.lib.version = @"-$version.project_id"
+  libs{cpputils}: bin.lib.version = @"-$version.project_id"
 else
-  lib{cpputils}: bin.lib.version = @"-$version.major.$version.minor"
+  libs{cpputils}: bin.lib.version = @"-$version.major.$version.minor"
 
 # Install into the libcpputils/ subdirectory of, say, /usr/include/
 # recreating subdirectories.
