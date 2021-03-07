@@ -9,7 +9,7 @@ bdep init -C ~/repos/c++/build2/build2builds/gcc-debug \
 @gcc-debug cc  config.cxx="g++ -ggdb -Og" \
 config.cxx.coptions="-Wall -Wextra -Weffc++ -pedantic -pedantic-errors \
 -fno-omit-frame-pointer -fsanitize=address -fsanitize=undefined  \
--fvisibility=hidden  -fvisibility-inlines-hidden" config.cxx.poptions="-DDEBUG" \
+" config.cxx.poptions="-DDEBUG" \
 config.bin.ar=gcc-ar config.bin.ranlib=gcc-ranlib \
 config.cxx.loptions="-fuse-ld=lld -fsanitize=address -fsanitize=undefined"
 ```
